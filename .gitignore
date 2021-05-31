@@ -47,3 +47,6 @@ Thumbs.db
 
 #ApiKeys
 apiKeys.json
+
+#environment
+/src/environments/environment.ts

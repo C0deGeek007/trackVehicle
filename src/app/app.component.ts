@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { ReadCSVService } from './services/read-csv.service';
 import { HttpClient } from "@angular/common/http";
+import { GetVehicleDataService } from '../app/services/get-vehicle-data.service'
 
 @Component({
   selector: 'app-root',
@@ -23,9 +24,14 @@ export class AppComponent {
   x2=50;
   speed=this.x1;
 
-  constructor( private ReadCSV:ReadCSVService) { }
+  constructor( private ReadCSV:ReadCSVService , private vehicleData:GetVehicleDataService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.vehicleData.getVehicleInfo().subscribe((res)=>{
+      this.lat=res[0]['lat']
+      this.lng=res[0]['long'];
+    })
+   }
 
   @ViewChild('fileImportInput') fileImportInput: any;
 
@@ -36,7 +42,7 @@ export class AppComponent {
   }
 
   plotOnMaps() {
-    this.interval= setInterval(()=>{
+    /*this.interval= setInterval(()=>{
      this.i=this.i+1
       this.ReadCSV.getLocation(this.i).subscribe((res)=>{
         if(res!=undefined) {
@@ -47,27 +53,27 @@ export class AppComponent {
           this.stopInterval();
         }
       })
-    },this.speed);
+    },this.speed);*/
   }
 
   stopInterval() {
-    clearInterval(this.interval);
+    //clearInterval(this.interval);
   }
 
   stopPlot() {
-    this.stopInterval();
+    //this.stopInterval();
   }
 
   stepUp() {
-    this.stopInterval();
+    /*this.stopInterval();
     this.speed=this.x2;
-    this.plotOnMaps();
+    this.plotOnMaps();*/
   }
 
   stepDown() {
-    this.stopInterval();
+    /*this.stopInterval();
     this.speed=this.x1;
-    this.plotOnMaps();
+    this.plotOnMaps();*/
   }
 
 }
